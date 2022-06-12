@@ -3,3 +3,5 @@ django-allauth==0.50.0
 Pillow==6.2.1
 cryptography==37.0.2
 PyMySQL==1.0.2
+django-bootstrap4==22.1
+django-pydenticon==0.2

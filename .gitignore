@@ -404,3 +404,5 @@ fabric.properties
 
 # custom
 /static
+configuration/.env
+/env.sh

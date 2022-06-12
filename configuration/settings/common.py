@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 import pymysql
+from django.urls import reverse, reverse_lazy
 
 pymysql.install_as_MySQLdb()
 
@@ -40,8 +41,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third Apps
+    "bootstrap4",
+    "django_pydenticon",
     # Local Apps
     "instagram",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -89,7 +94,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = "instagram.User"
+AUTH_USER_MODEL = "accounts.User"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -130,3 +135,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+# Email with Send Grid
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+WELCOME_EMAIL_SENDER = "admin@admin.com"
+
+LOGIN_REDIRECT_URL = reverse_lazy("instagram:index")
+LOGOUT_REDIRECT_URL = reverse_lazy("accounts:signin")
