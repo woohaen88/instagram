@@ -6,11 +6,10 @@
     <a class="p-2 text-dark" href="#">Support</a>
     <a class="p-2 text-dark" href="#">Profile</a>
     <a class="p-2 text-dark" href="{% url 'accounts:profile_edit' %}">{{ user }}
-        {% if user.avatar %}
-            <img src="{{ user.avatar.url }}" alt="">
-        {% else %}
-            <img src="{% url "pydenticon_image" data=user.username %}" style="width: 20px" alt=""></a>
-        {% endif %}
+        <img src="{{ user.avatar_url }}" style="width: 20px" alt=""></a>
+
+
+
       
 
 
