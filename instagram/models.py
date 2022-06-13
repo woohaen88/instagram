@@ -1,25 +1,33 @@
-# from django.core.mail import send_mail
-# from django.db import models
-# from django.contrib.auth.models import AbstractUser
-# from django.conf import settings
-# from django.template.loader import render_to_string
-#
-#
-# class User(AbstractUser):
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     website_url = models.URLField(blank=True)
-#     bio = models.TextField(blank=True)
-#
-#     def send_welcome_email(self):
-#         subject = render_to_string("welcome_email_subject.txt", {"user": self,})
-#         content = render_to_string("welcome_email_content.txt", {"user": self,})
-#         sender_email = settings.WELCOME_EMAIL_SENDER
-#         send_mail(subject, content, sender_email, [self.email], fail_silently=False)
-#
-#     class Meta:
-#         verbose_name_plural = "USER"
-#
-#
-# class Profile(models.Model):
-#     pass
+from django.db import models
+from django.conf import settings
+from django.urls import reverse
+import re
+
+
+class Post(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to="instagram/post/%Y/%m/%d")
+    caption = models.TextField()
+    tag_set = models.ManyToManyField("Tag", blank=True)
+    location = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.caption}"
+
+    def extract_tag_list(self):
+        tag_name_list = re.findall(r"#([a-zA-Z\dㄱ-힣]+)", self.caption)
+        tag_list = []
+        for tag_name in tag_name_list:
+            tag, _ = Tag.objects.get_or_create(name=tag_name)
+            tag_list.append(tag)
+        return tag_list
+
+    # def get_absolute_url(self):
+    #     return reverse
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return f"{self.name}"

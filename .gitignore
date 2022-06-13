@@ -406,3 +406,4 @@ fabric.properties
 /static
 configuration/.env
 /env.sh
+/instagram/migrations/000*
