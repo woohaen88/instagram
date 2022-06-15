@@ -407,3 +407,4 @@ fabric.properties
 configuration/.env
 /env.sh
 /instagram/migrations/000*
+requirements_test.txt
