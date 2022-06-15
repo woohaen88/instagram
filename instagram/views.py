@@ -8,8 +8,10 @@ from django.contrib import messages
 from .models import Tag, Post
 
 
+@login_required
 def index(request):
-    return render(request, "index.html")
+    context = {}
+    return render(request, "instagram/index.html", context)
 
 
 @login_required
