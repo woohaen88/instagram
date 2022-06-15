@@ -10,7 +10,16 @@ from .models import Tag, Post
 
 @login_required
 def index(request):
-    context = {}
+    suggested_user_list = (
+        get_user_model()
+        .objects.all()
+        .exclude(pk=request.user.pk)
+        .exclude(pk__in=request.user.following_set.all())
+    )
+
+    context = {
+        "suggested_user_list": suggested_user_list,
+    }
     return render(request, "instagram/index.html", context)
 
 

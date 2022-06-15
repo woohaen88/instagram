@@ -11,6 +11,9 @@ from django.utils.translation import gettext_lazy as _
 class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    follower_set = models.ManyToManyField("self", blank=True)
+    following_set = models.ManyToManyField("self", blank=True)
     website_url = models.URLField(blank=True)
     bio = models.TextField(blank=True)
     avatar = models.ImageField(
